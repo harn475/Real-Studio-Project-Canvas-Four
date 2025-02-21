@@ -1,3 +1,5 @@
+// MINIMAL
+
 let textContent = "Three concentric arches. The outside one is blue; the middle red; and the inside one is yellow.";
 let colorPicker, weightSlider, clearButton, undoButton, linkButton;
 let drawing = false;
@@ -10,13 +12,16 @@ function setup() {
   colorPicker = createColorPicker('#000000'); // Default black
   colorPicker.position(10, 460);
   
+  // weight of drawing pen
   weightSlider = createSlider(1, 10, 2);
   weightSlider.position(80, 460);
   
+  // Create clear button
   clearButton = createButton('Clear Drawing');
   clearButton.position(10, 500);
   clearButton.mousePressed(() => lines = []);
-  
+
+  // Create undo button (now erase)
   undoButton = createButton('Erase');
   undoButton.position(120, 500);
   undoButton.mousePressed(() => lines.pop());

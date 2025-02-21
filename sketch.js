@@ -1,8 +1,9 @@
-let textContent = "Three concentric arches. The outside one is blue; the middle red; and the inside one is yellow."
-let colorPicker, weightSlider, clearButton, undoButton;
+let textContent = "Three concentric arches. The outside one is blue; the middle red; and the inside one is yellow.";
+let colorPicker, weightSlider, clearButton, undoButton, linkButton;
 let drawing = false;
 let drawAreaSize = 600;
 let drawAreaX, drawAreaY;
+let lines = []; // Initialize the lines array
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
@@ -16,28 +17,32 @@ function setup() {
   clearButton.position(10, 500);
   clearButton.mousePressed(() => lines = []);
   
-  undoButton = createButton('Erase'); // changed to erase based off of function
+  undoButton = createButton('Erase');
   undoButton.position(120, 500);
   undoButton.mousePressed(() => lines.pop());
-  
-  drawAreaX = windowWidth / 2;
-  drawAreaY = (windowHeight - drawAreaSize) / 2;
 
+  // Create the link button
+  linkButton = createButton('View Wall Drawing #579');
+  linkButton.position(10, 540);
+  linkButton.mousePressed(() => window.open('https://massmoca.org/event/walldrawing579/', '_blank'));
+
+  drawAreaX = windowWidth / 2;
+  drawAreaY = (windowHeight - drawAreaSize) / 2; // Keeping your original positioning
 }
 
 function draw() {
   background(0);
   
-  // Draw text content separately to ensure it is unaffected
+  // Draw text content separately
   push();
   fill(255);
   noStroke();
   textAlign(CENTER, CENTER);
   textSize(16);
-  
   text(textContent, 10, 180, windowWidth / 2 - 10);
   pop();
   
+  // Draw the drawing area
   fill(255);
   noStroke();
   rect(drawAreaX, drawAreaY, drawAreaSize, drawAreaSize);
@@ -51,14 +56,14 @@ function draw() {
 }
 
 function mousePressed() {
-  if (mouseX > drawAreaX && mouseX < drawAreaX + drawAreaSize && mouseY > drawAreaY && mouseY < drawAreaY + drawAreaSize) {
+  if (mouseX > drawAreaX && mouseX < drawAreaX + drawAreaSize && 
+      mouseY > drawAreaY && mouseY < drawAreaY + drawAreaSize) {
     drawing = true;
   }
 }
 
 function mouseDragged() {
   if (drawing) {
-    // Constrain both current and previous mouse positions to the drawing area boundaries.
     let constrainedMouseX = constrain(mouseX, drawAreaX, drawAreaX + drawAreaSize);
     let constrainedMouseY = constrain(mouseY, drawAreaY, drawAreaY + drawAreaSize);
     let constrainedPmouseX = constrain(pmouseX, drawAreaX, drawAreaX + drawAreaSize);
